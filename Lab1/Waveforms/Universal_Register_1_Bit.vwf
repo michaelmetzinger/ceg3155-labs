@@ -1,0 +1,394 @@
+/*<simulation_settings>
+<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off Lab1 -c Lab1 --vector_source="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/Universal_Register_1_Bit.vwf" --testbench_file="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/simulation/qsim/Universal_Register_1_Bit.vwf.vht"</ftestbench_cmd>
+<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off Lab1 -c Lab1 --vector_source="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/Universal_Register_1_Bit.vwf" --testbench_file="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/simulation/qsim/Universal_Register_1_Bit.vwf.vht"</ttestbench_cmd>
+<fnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/simulation/qsim/" Lab1 -c Lab1</fnetlist_cmd>
+<tnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=off --flatten_buses=off --timescale=1ps --tool=modelsim_oem --format=vhdl --output_directory="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/simulation/qsim/" Lab1 -c Lab1</tnetlist_cmd>
+<modelsim_script>onerror {exit -code 1}
+vlib work
+vcom -work work Lab1.vho
+vcom -work work Universal_Register_1_Bit.vwf.vht
+vsim -novopt -c -t 1ps -L cyclonev -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.universal_dFF_1_vhd_vec_tst
+vcd file -direction Lab1.msim.vcd
+vcd add -internal universal_dFF_1_vhd_vec_tst/*
+vcd add -internal universal_dFF_1_vhd_vec_tst/i1/*
+proc simTimestamp {} {
+    echo "Simulation time: $::now ps"
+    if { [string equal running [runStatus]] } {
+        after 2500 simTimestamp
+    }
+}
+after 2500 simTimestamp
+run -all
+quit -f
+</modelsim_script>
+<modelsim_script_timing>onerror {exit -code 1}
+vlib work
+vcom -work work Lab1.vho
+vcom -work work Universal_Register_1_Bit.vwf.vht
+vsim -novopt -c -t 1ps -sdfmax universal_dFF_1_vhd_vec_tst/i1=Lab1_vhd.sdo -L cyclonev -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.universal_dFF_1_vhd_vec_tst
+vcd file -direction Lab1.msim.vcd
+vcd add -internal universal_dFF_1_vhd_vec_tst/*
+vcd add -internal universal_dFF_1_vhd_vec_tst/i1/*
+proc simTimestamp {} {
+    echo "Simulation time: $::now ps"
+    if { [string equal running [runStatus]] } {
+        after 2500 simTimestamp
+    }
+}
+after 2500 simTimestamp
+run -all
+quit -f
+</modelsim_script_timing>
+<hdl_lang>vhdl</hdl_lang>
+</simulation_settings>*/
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+
+/*
+Copyright (C) 2023  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+*/
+
+HEADER
+{
+	VERSION = 1;
+	TIME_UNIT = ns;
+	DATA_OFFSET = 0.0;
+	DATA_DURATION = 100.0;
+	SIMULATION_TIME = 0.0;
+	GRID_PHASE = 0.0;
+	GRID_PERIOD = 1.0;
+	GRID_DUTY_CYCLE = 50;
+}
+
+SIGNAL("i_clock")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("i_load")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("i_parallelInput")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("i_shiftLeft")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("i_shiftLeftInput")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("i_shiftRight")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("i_shiftRightInput")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("o_q")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+SIGNAL("o_qBar")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = OUTPUT;
+	PARENT = "";
+}
+
+GROUP("Control_Signals")
+{
+	MEMBERS = "i_load", "i_shiftLeft", "i_shiftRight";
+}
+
+TRANSITION_LIST("i_clock")
+{
+	NODE
+	{
+		REPEAT = 1;
+		NODE
+		{
+			REPEAT = 50;
+			LEVEL 0 FOR 1.0;
+			LEVEL 1 FOR 1.0;
+		}
+	}
+}
+
+TRANSITION_LIST("i_load")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 64.0;
+		LEVEL 1 FOR 36.0;
+	}
+}
+
+TRANSITION_LIST("i_parallelInput")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 1 FOR 2.0;
+		NODE
+		{
+			REPEAT = 24;
+			LEVEL 0 FOR 2.0;
+			LEVEL 1 FOR 2.0;
+		}
+		LEVEL 0 FOR 2.0;
+	}
+}
+
+TRANSITION_LIST("i_shiftLeft")
+{
+	NODE
+	{
+		REPEAT = 1;
+		NODE
+		{
+			REPEAT = 1;
+			LEVEL 0 FOR 32.0;
+			LEVEL 1 FOR 32.0;
+		}
+		LEVEL 0 FOR 32.0;
+		LEVEL 1 FOR 4.0;
+	}
+}
+
+TRANSITION_LIST("i_shiftLeftInput")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 1 FOR 4.0;
+		NODE
+		{
+			REPEAT = 12;
+			LEVEL 0 FOR 4.0;
+			LEVEL 1 FOR 4.0;
+		}
+	}
+}
+
+TRANSITION_LIST("i_shiftRight")
+{
+	NODE
+	{
+		REPEAT = 1;
+		NODE
+		{
+			REPEAT = 3;
+			LEVEL 0 FOR 16.0;
+			LEVEL 1 FOR 16.0;
+		}
+		LEVEL 0 FOR 4.0;
+	}
+}
+
+TRANSITION_LIST("i_shiftRightInput")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 1 FOR 8.0;
+		NODE
+		{
+			REPEAT = 5;
+			LEVEL 0 FOR 8.0;
+			LEVEL 1 FOR 8.0;
+		}
+		LEVEL 0 FOR 8.0;
+		LEVEL 1 FOR 4.0;
+	}
+}
+
+TRANSITION_LIST("o_q")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 100.0;
+	}
+}
+
+TRANSITION_LIST("o_qBar")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL X FOR 100.0;
+	}
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "i_clock";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 0;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "Control_Signals";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 1;
+	TREE_LEVEL = 0;
+	CHILDREN = 2, 3, 4;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "i_load";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 2;
+	TREE_LEVEL = 1;
+	PARENT = 1;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "i_shiftLeft";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 3;
+	TREE_LEVEL = 1;
+	PARENT = 1;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "i_shiftRight";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 4;
+	TREE_LEVEL = 1;
+	PARENT = 1;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "i_parallelInput";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 5;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "i_shiftLeftInput";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 6;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "i_shiftRightInput";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 7;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "o_q";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 8;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "o_qBar";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 9;
+	TREE_LEVEL = 0;
+}
+
+TIME_BAR
+{
+	TIME = 0;
+	MASTER = TRUE;
+}
+;
