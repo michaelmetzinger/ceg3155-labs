@@ -1,16 +1,16 @@
 /*<simulation_settings>
-<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off Lab1 -c Lab1 --vector_source="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/LED_Display.vwf" --testbench_file="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/simulation/qsim/LED_Display.vwf.vht"</ftestbench_cmd>
-<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off Lab1 -c Lab1 --vector_source="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/LED_Display.vwf" --testbench_file="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/simulation/qsim/LED_Display.vwf.vht"</ttestbench_cmd>
+<ftestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off Lab1 -c Lab1 --vector_source="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/dataPath.vwf" --testbench_file="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/simulation/qsim/dataPath.vwf.vht"</ftestbench_cmd>
+<ttestbench_cmd>quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off Lab1 -c Lab1 --vector_source="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/dataPath.vwf" --testbench_file="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/simulation/qsim/dataPath.vwf.vht"</ttestbench_cmd>
 <fnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/simulation/qsim/" Lab1 -c Lab1</fnetlist_cmd>
 <tnetlist_cmd>quartus_eda --write_settings_files=off --simulation --functional=off --flatten_buses=off --timescale=1ps --tool=modelsim_oem --format=vhdl --output_directory="C:/Users/ncers/OneDrive/Documents/CEG3155/Quartus Projects/Lab1/simulation/qsim/" Lab1 -c Lab1</tnetlist_cmd>
 <modelsim_script>onerror {exit -code 1}
 vlib work
 vcom -work work Lab1.vho
-vcom -work work LED_Display.vwf.vht
-vsim -novopt -c -t 1ps -L cyclonev -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.LED_Display_vhd_vec_tst
+vcom -work work dataPath.vwf.vht
+vsim -novopt -c -t 1ps -L cyclonev -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.dataPath_vhd_vec_tst
 vcd file -direction Lab1.msim.vcd
-vcd add -internal LED_Display_vhd_vec_tst/*
-vcd add -internal LED_Display_vhd_vec_tst/i1/*
+vcd add -internal dataPath_vhd_vec_tst/*
+vcd add -internal dataPath_vhd_vec_tst/i1/*
 proc simTimestamp {} {
     echo "Simulation time: $::now ps"
     if { [string equal running [runStatus]] } {
@@ -24,11 +24,11 @@ quit -f
 <modelsim_script_timing>onerror {exit -code 1}
 vlib work
 vcom -work work Lab1.vho
-vcom -work work LED_Display.vwf.vht
-vsim -novopt -c -t 1ps -sdfmax LED_Display_vhd_vec_tst/i1=Lab1_vhd.sdo -L cyclonev -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.LED_Display_vhd_vec_tst
+vcom -work work dataPath.vwf.vht
+vsim -novopt -c -t 1ps -sdfmax dataPath_vhd_vec_tst/i1=Lab1_vhd.sdo -L cyclonev -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.dataPath_vhd_vec_tst
 vcd file -direction Lab1.msim.vcd
-vcd add -internal LED_Display_vhd_vec_tst/*
-vcd add -internal LED_Display_vhd_vec_tst/i1/*
+vcd add -internal dataPath_vhd_vec_tst/*
+vcd add -internal dataPath_vhd_vec_tst/i1/*
 proc simTimestamp {} {
     echo "Simulation time: $::now ps"
     if { [string equal running [runStatus]] } {
@@ -86,7 +86,7 @@ SIGNAL("i_clock")
 	PARENT = "";
 }
 
-SIGNAL("i_GResetButton")
+SIGNAL("i_display_sel_0")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
@@ -96,7 +96,7 @@ SIGNAL("i_GResetButton")
 	PARENT = "";
 }
 
-SIGNAL("i_leftButton")
+SIGNAL("i_display_sel_1")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
@@ -106,7 +106,27 @@ SIGNAL("i_leftButton")
 	PARENT = "";
 }
 
-SIGNAL("i_rightButton")
+SIGNAL("i_load")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("i_lshift")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("i_rshift")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
@@ -220,34 +240,58 @@ TRANSITION_LIST("i_clock")
 	}
 }
 
-TRANSITION_LIST("i_GResetButton")
+TRANSITION_LIST("i_display_sel_0")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 1 FOR 2.0;
-		LEVEL 0 FOR 12.0;
-		LEVEL 1 FOR 2.0;
-		LEVEL 0 FOR 84.0;
-	}
-}
-
-TRANSITION_LIST("i_leftButton")
-{
-	NODE
-	{
-		REPEAT = 1;
-		LEVEL 1 FOR 4.0;
 		NODE
 		{
 			REPEAT = 12;
 			LEVEL 0 FOR 4.0;
 			LEVEL 1 FOR 4.0;
 		}
+		LEVEL 0 FOR 4.0;
 	}
 }
 
-TRANSITION_LIST("i_rightButton")
+TRANSITION_LIST("i_display_sel_1")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 1 FOR 100.0;
+	}
+}
+
+TRANSITION_LIST("i_load")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 1 FOR 2.0;
+		LEVEL 0 FOR 22.0;
+		LEVEL 1 FOR 2.0;
+		LEVEL 0 FOR 74.0;
+	}
+}
+
+TRANSITION_LIST("i_lshift")
+{
+	NODE
+	{
+		REPEAT = 1;
+		NODE
+		{
+			REPEAT = 12;
+			LEVEL 0 FOR 4.0;
+			LEVEL 1 FOR 4.0;
+		}
+		LEVEL 0 FOR 4.0;
+	}
+}
+
+TRANSITION_LIST("i_rshift")
 {
 	NODE
 	{
@@ -339,7 +383,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "i_GResetButton";
+	CHANNEL = "i_load";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 1;
@@ -348,7 +392,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "i_leftButton";
+	CHANNEL = "i_display_sel_0";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 2;
@@ -357,7 +401,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "i_rightButton";
+	CHANNEL = "i_lshift";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 3;
@@ -366,12 +410,30 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "o_display";
+	CHANNEL = "i_display_sel_1";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 4;
 	TREE_LEVEL = 0;
-	CHILDREN = 5, 6, 7, 8, 9, 10, 11, 12;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "i_rshift";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 5;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "o_display";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 6;
+	TREE_LEVEL = 0;
+	CHILDREN = 7, 8, 9, 10, 11, 12, 13, 14;
 }
 
 DISPLAY_LINE
@@ -379,9 +441,9 @@ DISPLAY_LINE
 	CHANNEL = "o_display[7]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 5;
+	TREE_INDEX = 7;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 6;
 }
 
 DISPLAY_LINE
@@ -389,9 +451,9 @@ DISPLAY_LINE
 	CHANNEL = "o_display[6]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 6;
+	TREE_INDEX = 8;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 6;
 }
 
 DISPLAY_LINE
@@ -399,9 +461,9 @@ DISPLAY_LINE
 	CHANNEL = "o_display[5]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 7;
+	TREE_INDEX = 9;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 6;
 }
 
 DISPLAY_LINE
@@ -409,9 +471,9 @@ DISPLAY_LINE
 	CHANNEL = "o_display[4]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 8;
+	TREE_INDEX = 10;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 6;
 }
 
 DISPLAY_LINE
@@ -419,9 +481,9 @@ DISPLAY_LINE
 	CHANNEL = "o_display[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 9;
+	TREE_INDEX = 11;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 6;
 }
 
 DISPLAY_LINE
@@ -429,9 +491,9 @@ DISPLAY_LINE
 	CHANNEL = "o_display[2]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 10;
+	TREE_INDEX = 12;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 6;
 }
 
 DISPLAY_LINE
@@ -439,9 +501,9 @@ DISPLAY_LINE
 	CHANNEL = "o_display[1]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 11;
+	TREE_INDEX = 13;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 6;
 }
 
 DISPLAY_LINE
@@ -449,9 +511,9 @@ DISPLAY_LINE
 	CHANNEL = "o_display[0]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 12;
+	TREE_INDEX = 14;
 	TREE_LEVEL = 1;
-	PARENT = 4;
+	PARENT = 6;
 }
 
 TIME_BAR
