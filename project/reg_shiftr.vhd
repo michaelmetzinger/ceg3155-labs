@@ -28,7 +28,7 @@ begin
 int_next_val(bits) <= i_shift_in;
 
 perbitloop: for i in 1 to bits generate	
-	reg_i: reg port map (int_next_val(i downto i), i_shift, i_clock, int_next_val(bits-1 downto bits-1));
+	reg_i: reg port map (int_next_val(i downto i), i_shift, i_clock, int_next_val(i-1 downto i-1));
 end generate;
 
 o_data(bits downto 1) <= int_next_val(bits-1 downto 0);
