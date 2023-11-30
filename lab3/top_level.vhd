@@ -6,7 +6,8 @@ entity top_level is
 			i_msc, i_ssc : in std_logic_vector(3 downto 0);
 			i_sscs : in std_logic;
 			o_mstl, o_sstl : out std_logic_vector(2 downto 0); --ryg
-			o_bcd1, o_bcd2 : out std_logic_vector(3 downto 0) --left, right diget
+			o_bcd1, o_bcd2 : out std_logic_vector(3 downto 0); --left, right diget
+			o_lightstate : out std_logic_vector(1 downto 0)
 		 );
 end top_level;
 
@@ -27,6 +28,8 @@ signal int_bcd_tens, int_bcd_ones : std_logic_vector(3 downto 0);
 signal int_msg, int_msy, int_msr, int_ssg, int_ssy, int_ssr : std_logic; --ms main street, ss second street, (g, y, r) for green yellow red
 
 signal int_car_sensor : std_logic;
+
+signal int_lightstate : std_logic_vector(1 downto 0);
 
 component MUX_4_To_1_n IS
 	GENERIC(bits : integer := 2);
@@ -59,7 +62,8 @@ component fsm_Controller IS
 		i_carSensor, i_timerDone			: IN	STD_LOGIC;
 		o_setTimer								: OUT STD_LOGIC;
 		o_mGreen, o_mYellow, o_mRed		: OUT	STD_LOGIC;
-		o_sGreen, o_sYellow, o_sRed		: OUT	STD_LOGIC);
+		o_sGreen, o_sYellow, o_sRed		: OUT	STD_LOGIC;
+		o_lightstate : out std_logic_vector(1 downto 0));
 end component;
 
 component debouncer IS
@@ -85,9 +89,11 @@ component clk_div IS
 END component;
 
 begin
-clk_diver: clk_div port map(clock_25Mhz => i_gclock, clock_1Hz => int_1hz_clock);
+clk_diver: clk_div port map(clock_25Mhz => i_gclock, clock_1MHz => int_1hz_clock);
 
-int_yt <= "0011"; --yellow time 3 clock cycles
+
+
+int_yt <= "1111"; --yellow time 3 clock cycles
 int_mux_sel(0) <= int_msg;
 int_mux_sel(1) <= int_msg or int_ssg;
 mux: MUX_4_To_1_n generic map(bits => 4)
@@ -117,8 +123,11 @@ fsm: fsm_Controller port map(
 	int_timer_complete,
 	int_fsm_clear_timer,
 	int_msg, int_msy, int_msr,
-	int_ssg, int_ssy, int_ssr
+	int_ssg, int_ssy, int_ssr,
+	int_lightstate
 );
+
+o_lightstate <= int_lightstate;
 
 o_bcd1 <= int_bcd_tens;
 o_bcd2 <= int_bcd_ones;

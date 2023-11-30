@@ -8,7 +8,8 @@ ENTITY fsm_Controller IS
 		i_carSensor, i_timerDone			: IN	STD_LOGIC;
 		o_setTimer								: OUT STD_LOGIC;
 		o_mGreen, o_mYellow, o_mRed		: OUT	STD_LOGIC;
-		o_sGreen, o_sYellow, o_sRed		: OUT	STD_LOGIC);
+		o_sGreen, o_sYellow, o_sRed		: OUT	STD_LOGIC;
+		o_lightstate : out std_logic_vector(1 downto 0));
 END fsm_Controller;
 
 ARCHITECTURE struct OF fsm_Controller IS
@@ -56,5 +57,8 @@ BEGIN
 	o_sGreen 	<= (int_presentState1 and (not(int_presentState0)));
 	o_sYellow 	<= (int_presentState1 and int_presentState0);
 	o_sRed 		<= (not(int_presentState1));
+	
+	o_lightstate(1) <= int_presentState1;
+	o_lightstate(0) <= int_presentState0;
 	
 END struct;
